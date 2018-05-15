@@ -1,28 +1,29 @@
 var Spotify = require('node-spotify-api');
-//link .env values
-var spotify = new Spotify({
+var key = require('./keys');
 
+var spotify = new Spotify({
+    id: key.spotify.id,
+    secret: key.spotify.secret
 });
 
 spotify.search({
-    type: 'track',
-    query: 'All the Small Things'
+    type: 'track', //in random.txt - spotify-this-song,"I Want it That Way" 
+    query: 'The Sign'
 }, function (err, data) {
     if (err) {
         return console.log('Error occurred: ' + err);
     }
-    // perform spotify calls
-    spotify
-        .request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx')
-        .then(function (response) { /*all of the data i want to collect from the resulting json*/ 
+    // calling spotify
+    spotify /*`https://api.spotify.com/v1/tracks/${spotQuery}`*/
+        .request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE')
+        .then(function (response) { /*all of the data i want to collect from resp*/
             console.log(response.artists[0].name);
             console.log(response.album.name);
             console.log(response.name);
             console.log(response.href);
+
         })
         .catch(function (err) {
             console.error('Error occurred: ' + err);
         });
 });
-
-
